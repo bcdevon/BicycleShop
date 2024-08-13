@@ -2,6 +2,7 @@ package com.example.bicycleshop.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.PartViewHolder
             String name=current.getPartName();
             int prodID= current.getProductID();
             holder.partItemView.setText(name);
+            Log.d("PartAdapter", "Part Name: " + name + ", Product ID: " + prodID);
             holder.partItemView2.setText(Integer.toString(prodID));
         }
         else {

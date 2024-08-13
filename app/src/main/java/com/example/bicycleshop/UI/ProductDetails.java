@@ -36,5 +36,6 @@ public class ProductDetails extends AppCompatActivity {
         final PartAdapter partAdapter = new PartAdapter(this);
         recyclerView.setAdapter(partAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        partAdapter.setParts(repository.getmAllParts());
     }
 }

@@ -7,23 +7,18 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="237dp"
-        tools:layout_editor_absoluteY="218dp"
+        android:text="Part Name"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         />
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="293dp"
-        tools:layout_editor_absoluteY="558dp"
+        android:text="Product ID"
+        app:layout_constraintStart_toEndOf="@id/textView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/textView3"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
