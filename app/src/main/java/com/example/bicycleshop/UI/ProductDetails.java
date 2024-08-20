@@ -85,6 +85,10 @@ public class ProductDetails extends AppCompatActivity {
                 repository.update(product);
                 this.finish();
             }
+        } else if (item.getItemId() == R.id.productdelete) {
+            Product product = new Product(productID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()));
+            repository.delete(product);
+            this.finish();
         }
         return true;
     }

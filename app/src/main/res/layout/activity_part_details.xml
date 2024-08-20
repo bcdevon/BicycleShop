@@ -7,4 +7,93 @@
     android:layout_height="match_parent"
     tools:context=".UI.PartDetails">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="?actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:text="Name: " />
+
+            <EditText
+                android:id="@+id/editPartName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Enter part name" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:text="Price: " />
+
+            <EditText
+                android:id="@+id/editPartPrice"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:hint="Enter part price" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:text="Note: " />
+
+            <EditText
+                android:id="@+id/editPartNote"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Enter note" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:text="Date: " />
+
+            <EditText
+                android:id="@+id/editPartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Enter date" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
