@@ -16,47 +16,39 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.bicycleshop.R;
 import com.example.bicycleshop.database.Repository;
 import com.example.bicycleshop.entities.Part;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class PartDetails extends AppCompatActivity {
-    String partName;
-    String partNote;
-    String partDate;
-    double partPrice;
-    int partID;
-    int productID;
-
-    EditText editPartName;
-    EditText editPartPrice;
-    EditText editPartNote;
-    EditText editPartDate;
-
-
-    Repository repository;
+    private EditText editPartName, editPartPrice, editPartNote, editPartDate;
+    private int partID, productID;
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_part_details);
-
 
         editPartName = findViewById(R.id.editPartName);
         editPartPrice = findViewById(R.id.editPartPrice);
         editPartNote = findViewById(R.id.editPartNote);
         editPartDate = findViewById(R.id.editPartDate);
 
+        repository = new Repository(getApplication());
+
         partID = getIntent().getIntExtra("id", -1);
         productID = getIntent().getIntExtra("prodID", -1);
-        partName = getIntent().getStringExtra("name");
-        partPrice = getIntent().getDoubleExtra("price", 0.0);
-        partNote = getIntent().getStringExtra("note");
-        partDate = getIntent().getStringExtra("date");
+        String partName = getIntent().getStringExtra("name");
+        double partPrice = getIntent().getDoubleExtra("price", 0.0);
+        String partNote = getIntent().getStringExtra("note");
+        String partDate = getIntent().getStringExtra("date");
 
-        editPartName.setText(partName);
-        editPartPrice.setText(Double.toString(partPrice));
-        editPartNote.setText(partNote);
-        editPartDate.setText(partDate);
-
+        if (partID != -1) {
+            editPartName.setText(partName);
+            editPartPrice.setText(String.valueOf(partPrice));
+            editPartNote.setText(partNote);
+            editPartDate.setText(partDate);
+        }
     }
 
     @Override
@@ -68,24 +60,40 @@ public class PartDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.partsave) {
-            Part part;
-            if (partID == -1) {
-                if (repository.getmAllParts().size() == 0) partID = 1;
-                else
-                    partID = repository.getmAllParts().get(repository.getmAllParts().size() - 1).getPartID() + 1;
-                part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
-                repository.insert(part);
-                this.finish();
-            } else {
-                part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
-                repository.update(part);
-                this.finish();
-            }
-        } else if (item.getItemId() == R.id.productdelete) {
-            Part part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
-            repository.delete(part);
-            this.finish();
+            savePart();
+            return true;
+        } else if (item.getItemId() == R.id.sharenote) {
+            sharePartNote();
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void savePart() {
+        Part part;
+        if (partID == -1) {
+            partID = repository.getmAllParts().size() == 0 ? 1 : repository.getmAllParts().get(repository.getmAllParts().size() - 1).getPartID() + 1;
+            part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
+            repository.insert(part);
+        } else {
+            part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
+            repository.update(part);
+        }
+        this.finish();
+    }
+
+    private void deletePart() {
+        Part part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
+        repository.delete(part);
+        this.finish();
+    }
+
+    private void sharePartNote() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, editPartNote.getText().toString());
+        sendIntent.setType("text/plain");
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 }
