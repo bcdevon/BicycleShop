@@ -17,8 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bicycleshop.R;
 import com.example.bicycleshop.database.Repository;
+import com.example.bicycleshop.entities.Part;
 import com.example.bicycleshop.entities.Product;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDetails extends AppCompatActivity {
     String name;
@@ -56,7 +60,11 @@ public class ProductDetails extends AppCompatActivity {
         final PartAdapter partAdapter = new PartAdapter(this);
         recyclerView.setAdapter(partAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        partAdapter.setParts(repository.getmAllParts());
+        List<Part> filteredParts = new ArrayList<>();
+        for (Part p : repository.getmAllParts()){
+            if (p.getProductID() == productID) filteredParts.add(p);
+        }
+        partAdapter.setParts(filteredParts);
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_product_details, menu);
@@ -68,8 +76,20 @@ public class ProductDetails extends AppCompatActivity {
             if (productID==-1){
                 if (repository.getmAllProducts().size() == 0)productID = 1;
                 else productID = repository.getmAllProducts().get(repository.getmAllProducts().size() -1).getProductID() +1;
-                product=
+                product= new Product(productID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()));
+                repository.insert(product);
+                this.finish();
             }
+            else {
+                product= new Product(productID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()));
+                repository.update(product);
+                this.finish();
+            }
+        } else if (item.getItemId() == R.id.productdelete) {
+            Product product = new Product(productID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()));
+            repository.delete(product);
+            this.finish();
         }
+        return true;
     }
 }

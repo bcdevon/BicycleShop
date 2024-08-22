@@ -55,6 +55,17 @@ private Repository repository;
     }
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        List<Product> allProducts=repository.getmAllProducts();
+        RecyclerView recyclerView=findViewById(R.id.recyclerview);
+        final ProductAdapter productAdapter=new ProductAdapter(this);
+        recyclerView.setAdapter(productAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        productAdapter.setProducts(allProducts);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId()==R.id.sample){
             repository=new Repository(getApplication());

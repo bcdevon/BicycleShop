@@ -11,7 +11,7 @@ import com.example.bicycleshop.dao.ProductDAO;
 import com.example.bicycleshop.entities.Part;
 import com.example.bicycleshop.entities.Product;
 
-@Database(entities = {Product.class, Part.class}, version = 5,exportSchema = false)
+@Database(entities = {Product.class, Part.class}, version = 6,exportSchema = false)
 public abstract class BicycleDatabaseBuilder extends RoomDatabase {
     public abstract ProductDAO productDAO();
     public abstract PartDAO partDAO();
