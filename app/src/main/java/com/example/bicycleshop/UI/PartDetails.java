@@ -59,33 +59,16 @@ public class PartDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.partsave) {
-            savePart();
-            return true;
-        } else if (item.getItemId() == R.id.sharenote) {
-            sharePartNote();
-            return true;
+            Part part;
+            if (partID == -1){
+                if (repository.getmAllParts().size() == 0)
+                    partID = 1;
+                else
+                    partID = repository.getmAllParts().get(repository.getmAllParts().size() -1).getPartID() +1;
+                part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID)
+            }
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    private void savePart() {
-        Part part;
-        if (partID == -1) {
-            partID = repository.getmAllParts().size() == 0 ? 1 : repository.getmAllParts().get(repository.getmAllParts().size() - 1).getPartID() + 1;
-            part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
-            repository.insert(part);
-        } else {
-            part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
-            repository.update(part);
-        }
-        this.finish();
-    }
-
-    private void deletePart() {
-        Part part = new Part(partID, editPartName.getText().toString(), Double.parseDouble(editPartPrice.getText().toString()), productID);
-        repository.delete(part);
-        this.finish();
-    }
 
     private void sharePartNote() {
         Intent sendIntent = new Intent();
