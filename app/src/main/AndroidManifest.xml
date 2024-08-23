@@ -15,8 +15,8 @@
         <activity
             android:name=".UI.PartDetails"
             android:label="Part Details"
-            android:parentActivityName=".UI.ProductDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".UI.ProductList"/>
         <activity
             android:name=".UI.ProductDetails"
             android:exported="false"
