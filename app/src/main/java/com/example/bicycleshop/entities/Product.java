@@ -19,6 +19,9 @@ public class Product {
     public int getProductID() {
         return productID;
     }
+    public String toString(){
+        return productName;
+    }
 
     public void setProductID(int productID) {
         this.productID = productID;

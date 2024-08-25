@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.Manifest;
@@ -90,7 +91,13 @@ public class PartDetails extends AppCompatActivity {
             }
         };
         Spinner spinner=findViewById(R.id.spinner);
-        ArrayList<Product> productArrayList=new
+        ArrayList<Product> productArrayList=new ArrayList<>();
+
+        productArrayList.addAll(repository.getmAllProducts());
+
+        ArrayAdapter<Product>productAdapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,productArrayList);
+        spinner.setAdapter(productAdapter);
+        spinner.setSelection(0);
 
         partID = getIntent().getIntExtra("id", -1);
         productID = getIntent().getIntExtra("prodID", -1);
