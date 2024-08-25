@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,8 @@ public class ProductDetails extends AppCompatActivity {
     int productID;
     EditText editName;
     EditText editPrice;
+    Product currentProduct;
+    int numParts;
 
 
     Repository repository;
@@ -85,10 +88,23 @@ public class ProductDetails extends AppCompatActivity {
                 repository.update(product);
                 this.finish();
             }
-        } else if (item.getItemId() == R.id.productdelete) {
-            Product product = new Product(productID, editName.getText().toString(), Double.parseDouble(editPrice.getText().toString()));
-            repository.delete(product);
-            this.finish();
+        }
+        if (item.getItemId() == R.id.productdelete) {
+            for (Product prod:repository.getmAllProducts()){
+                if (prod.getProductID()==productID)currentProduct=prod;
+            }
+            numParts=0;
+            for (Part part: repository.getmAllParts()){
+                if (part.getProductID()==productID)++numParts;
+            }
+            if (numParts==0){
+                repository.delete(currentProduct);
+                Toast.makeText(ProductDetails.this, currentProduct.getProductName() + " was deleted", Toast.LENGTH_LONG).show();
+                ProductDetails.this.finish();
+            }
+            else {
+                Toast.makeText(ProductDetails.this, "Can't delete a product with a parts",Toast.LENGTH_LONG).show();
+            }
         }
         return true;
     }
